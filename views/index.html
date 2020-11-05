@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antrian</title>
+
+  <style>
+    .antrian {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .txt-antrian {
+      font-size: 70px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="antrian">
+    <span id="txt-antrian" class="txt-antrian">
+      {{ .antrian }}
+    </span>
+  </div>
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
+
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyDMO5Cs6FHDxVZZgDSE6ep5qpGI_nWzUg8",
+      authDomain: "antrianfirebase.firebaseapp.com",
+      databaseURL: "https://antrianfirebase.firebaseio.com",
+      projectId: "antrianfirebase",
+      storageBucket: "antrianfirebase.appspot.com",
+      messagingSenderId: "107260186477",
+      appId: "1:107260186477:web:9379198ce6269f59ea9464",
+      measurementId: "G-KRGQXY050S"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var antrianRef = firebase.database().ref('antrian');
+    antrianRef.on('value', function (snapshot) {
+      const antrian = snapshot.val()
+      const currentAntrian = antrian.find(item => item != null && item.status === false)
+
+      document.getElementById('txt-antrian').innerText = currentAntrian.id
+    });
+  </script>
+</body>
+
+</html>
